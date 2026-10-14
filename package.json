@@ -1,0 +1,9 @@
+{
+  "name": "standbissima",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Formulaire Diagnostic 360° BISSIMA - frontend statique + API Vercel + MongoDB Atlas",
+  "dependencies": {
+    "mongodb": "^6.9.0"
+  }
+}

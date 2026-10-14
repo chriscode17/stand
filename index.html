@@ -281,6 +281,7 @@
                 <div class="question-card"><div class="question-title">Q10. Où vous voyez-vous 10 ans après le baccalauréat ? Ajoutez toute contrainte, inquiétude ou question qui compte pour votre projet.</div><div class="text-block"><textarea name="e_q10" rows="4"></textarea></div></div>
                 <div class="consent-box"><label class="radio-option"><input type="checkbox" name="e_consent" required> J'ai répondu honnêtement et avec mes propres mots. J'accepte que mes réponses soient traitées de manière confidentielle par BISSIMA aux seules fins de mon accompagnement, conformément à la loi n° 2024/017 relative à la protection des données à caractère personnel.</label></div>
 
+                <div style="position:absolute;left:-9999px;" aria-hidden="true"><label>Ne pas remplir <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
                 <button type="submit" class="submit-btn">Soumettre le Diagnostic Élève</button>
             </form>
         </section>
@@ -312,6 +313,7 @@
                 <div class="form-group"><label for="p-fin">Quelles sont vos principales attentes ou inquiétudes concernant l'avenir de votre enfant ?</label><textarea id="p-fin" name="p_fin" rows="4" placeholder="Partagez vos attentes (financement, choix des écoles, intégration)..."></textarea></div>
                 <div class="consent-box"><label class="radio-option"><input type="checkbox" name="p_consent" required> Nous certifions l'exactitude des informations fournies et consentons à leur traitement confidentiel par BISSIMA aux seules fins de l'accompagnement de notre enfant, conformément à la loi n° 2024/017. Nous comprenons que le programme BISSIMA HORIZON engage une obligation de moyens, et non une garantie de résultat.</label></div>
 
+                <div style="position:absolute;left:-9999px;" aria-hidden="true"><label>Ne pas remplir <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
                 <button type="submit" class="submit-btn">Soumettre le Diagnostic Parent</button>
             </form>
         </section>
@@ -353,12 +355,36 @@
             return data;
         }
 
-        // Simulation de soumission (en attendant la base de données)
-        function handleSubmit(event, profileType) {
+        // Envoi des réponses à l'API Vercel (enregistrement dans MongoDB Atlas)
+        async function handleSubmit(event, profileType) {
             event.preventDefault();
-            const answers = collectAnswers(event.target);
-            console.log('Diagnostic 360° - ' + profileType, JSON.stringify(answers, null, 2));
-            alert(`Merci ! Le formulaire ${profileType} a bien été simulé avec succès.\n\nProchaine étape : nous connecterons ces données à votre future base de données.`);
+            const form = event.target;
+            const button = form.querySelector('.submit-btn');
+            const labelInitial = button.textContent;
+            button.disabled = true;
+            button.textContent = 'Envoi en cours...';
+
+            try {
+                const response = await fetch('/api/diagnostic', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ profil: profileType, ...collectAnswers(form) })
+                });
+                const result = await response.json().catch(() => ({}));
+
+                if (response.ok && result.ok) {
+                    alert('Merci ! Vos réponses ont bien été enregistrées. L\'équipe BISSIMA vous contactera prochainement.');
+                    form.reset();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    alert(result.error || 'Une erreur est survenue. Veuillez réessayer.');
+                }
+            } catch (error) {
+                alert('Connexion impossible. Vérifiez votre réseau et réessayez.');
+            } finally {
+                button.disabled = false;
+                button.textContent = labelInitial;
+            }
         }
     </script>
 </body>
