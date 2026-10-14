@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic 360° Bissima - Formulaires Élève & Parent</title>
+    <style>
+        :root {
+            --beige: #F2E8DA;
+            --ocre: #D49A00;
+            --marron: #A83818;
+            --vert: #008000;
+            --bleu-marine: #1E293B;
+            --blanc: #FFFFFF;
+            --gris-clair: #FAFAFA;
+            --gris-bordure: #E2E8F0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--beige);
+            color: var(--bleu-marine);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--bleu-marine);
+            color: var(--blanc);
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom: 5px solid var(--ocre);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+            color: #CBD5E1;
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Onglets de sélection de formulaire */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            background-color: var(--blanc);
+            border: 2px solid var(--bleu-marine);
+            color: var(--bleu-marine);
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background-color: var(--ocre);
+            border-color: var(--ocre);
+            color: var(--blanc);
+            box-shadow: 0 4px 12px rgba(212, 154, 0, 0.3);
+        }
+
+        /* Formulaires */
+        .form-section {
+            display: none;
+            background-color: var(--blanc);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--marron);
+            border-bottom: 2px solid var(--ocre);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: var(--bleu-marine);
+            background-color: var(--gris-clair);
+            padding: 0.75rem 1rem;
+            border-left: 4px solid var(--vert);
+            margin-top: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--bleu-marine);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gris-bordure);
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background-color: var(--gris-clair);
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--ocre);
+            background-color: var(--blanc);
+        }
+
+        .question-card {
+            background-color: var(--gris-clair);
+            border: 1px solid var(--gris-bordure);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-title {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--bleu-marine);
+        }
+
+        .radio-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .radio-option input {
+            margin-top: 0.25rem;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background-color: var(--vert);
+            color: var(--blanc);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .submit-btn:hover {
+            background-color: #006600;
+        }
+
+        .intro-box {
+            background-color: #FEF3C7;
+            border: 1px solid #F59E0B;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: #92400E;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--bleu-marine);
+            color: var(--blanc);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-section {
+                padding: 1rem;
+            }
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* ---- Ajouts v2 ---- */
+        .hint { font-size: 0.9rem; color: #475569; margin: 0.5rem 0 1rem; }
+        h3.axe-bac { border-left-color: var(--ocre); background-color: #FFF7E0; }
+        .check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.75rem; }
+        .scale-wrap { overflow-x: auto; }
+        .scale-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; min-width: 520px; }
+        .scale-table th { background: var(--bleu-marine); color: var(--blanc); padding: 0.5rem; text-align: center; }
+        .scale-table th:first-child, .scale-table td:first-child { text-align: left; }
+        .scale-table td { padding: 0.6rem 0.5rem; text-align: center; border-bottom: 1px solid var(--gris-bordure); }
+        .scale-table td:first-child { font-weight: 600; }
+        .scale-table input { cursor: pointer; width: 1.1rem; height: 1.1rem; }
+        .scale-legend { font-size: 0.85rem; font-style: italic; color: #475569; margin-top: 0.5rem; }
+        .inline-text { width: auto !important; display: inline-block; margin-left: 0.5rem; padding: 0.35rem 0.5rem !important; }
+        .consent-box { background: #E8F5E9; border: 1px solid var(--vert); border-radius: 8px; padding: 1rem 1.25rem; margin-top: 2rem; }
+        .optional { font-weight: 400; font-size: 0.85rem; color: #64748B; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>BISSIMA - Diagnostic 360°</h1>
+        <p>Inspirer • Former • Accompagner | Lignan Consulting</p>
+    </header>
+
+    <div class="container">
+        <!-- Boutons de bascule entre les formulaires -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchForm('eleve')">Formulaire Élève / Étudiant</button>
+            <button class="tab-btn" onclick="switchForm('parent')">Formulaire Parent</button>
+        </div>
+
+        <!-- FORMULAIRE ÉLÈVE / ÉTUDIANT -->
+        <section id="eleve-form" class="form-section active">
+            <h2>Diagnostic 360° - Espace Élève / Étudiant</h2>
+            <div class="intro-box">
+                <strong>Avant de commencer :</strong> Ce questionnaire n'est pas un examen : il n'y a ni note, ni piège, ni « bonne réponse ». Répondez seul(e), avec vos mots, honnêtement, selon votre situation réelle d'aujourd'hui. Durée indicative : 5 à 10 minutes. Vos réponses restent confidentielles et ne sont partagées qu'avec l'équipe qui vous accompagnera.
+            </div>
+
+            <form onsubmit="handleSubmit(event, 'Élève')">
+                <h3>Section 0 : Vos informations</h3>
+                <div class="form-group"><label for="e-nom">Nom et Prénoms :</label><input type="text" id="e-nom" name="e_nom" required></div>
+                <div class="form-group"><label for="e-email">Adresse Électronique :</label><input type="email" id="e-email" name="e_email" required></div>
+                <div class="form-group"><label for="e-tel">Téléphone ou WhatsApp :</label><input type="tel" id="e-tel" name="e_tel" required></div>
+                <div class="form-group"><label for="e-pays">Pays et Ville de résidence :</label><input type="text" id="e-pays" name="e_pays" required></div>
+                <div class="form-group"><label for="e-situation">Votre situation actuelle :</label><select id="e-situation" name="e_situation" required><option value="">-- Choisissez --</option><option value="3e">Élève de 3e</option><option value="seconde-premiere">Élève de Seconde ou de Première</option><option value="terminale">Élève de terminale ou titulaire du baccalauréat</option><option value="cycle">Étudiant en cours de cycle (Licence, Master)</option><option value="jeune-diplome">Jeune diplômé</option><option value="doctorant">Doctorant, candidat au doctorat ou chercheur</option><option value="reconversion">En reconversion professionnelle</option></select></div>
+                <h3>Axe A : Clarté de mon projet</h3>
+                <div class="question-card"><div class="question-title">Q1. Où en êtes-vous dans la définition de votre prochaine étape académique ?</div><div class="radio-options"><label class="radio-option"><input type="radio" name="e_q1" value="1" required> Je n&#x27;ai aucune idée de ce que je veux étudier ou entreprendre ensuite.</label><label class="radio-option"><input type="radio" name="e_q1" value="2"> J&#x27;ai une intuition sur un grand domaine, sans plus.</label><label class="radio-option"><input type="radio" name="e_q1" value="3"> J&#x27;ai identifié une filière précise, mais aucun programme concret.</label><label class="radio-option"><input type="radio" name="e_q1" value="4"> J&#x27;ai identifié 1 à 3 programmes précis dans des établissements nommés.</label><label class="radio-option"><input type="radio" name="e_q1" value="5"> J&#x27;ai une liste hiérarchisée de programmes avec établissements et critères.</label><label class="radio-option"><input type="radio" name="e_q1" value="na"> Sans objet - cette question ne me concerne pas.</label></div></div>
+                <div class="question-card"><div class="question-title">Q2. Quel métier ou quelle fonction visez-vous après vos études ?</div><div class="radio-options"><label class="radio-option"><input type="radio" name="e_q2" value="1" required> Je ne sais pas du tout.</label><label class="radio-option"><input type="radio" name="e_q2" value="2"> Un secteur vague (&quot;l&#x27;informatique&quot;, &quot;la santé&quot;).</label><label class="radio-option"><input type="radio" name="e_q2" value="3"> Une famille de métiers, sans intitulé précis.</label><label class="radio-option"><input type="radio" name="e_q2" value="4"> Un intitulé de poste précis que je sais décrire.</label><label class="radio-option"><input type="radio" name="e_q2" value="5"> Un intitulé précis avec missions, compétences et niveau d&#x27;entrée attendus.</label><label class="radio-option"><input type="radio" name="e_q2" value="na"> Sans objet - cette question ne me concerne pas.</label></div></div>
+                <h3 class="axe-bac">Axe B : Mon avenir après le baccalauréat</h3>
+                <div class="question-card"><div class="question-title">Q3. Que souhaitez-vous faire juste après le baccalauréat ?</div><div class="radio-options"><label class="radio-option"><input type="radio" name="e_q3" value="1" required> Poursuivre des études supérieures dans mon pays</label><label class="radio-option"><input type="radio" name="e_q3" value="2"> Poursuivre des études supérieures à l&#x27;étranger</label><label class="radio-option"><input type="radio" name="e_q3" value="3"> Suivre une formation professionnelle ou technique courte (BTS, certification…)</label><label class="radio-option"><input type="radio" name="e_q3" value="4"> Préparer un concours (grandes écoles, fonction publique, écoles de santé…)</label><label class="radio-option"><input type="radio" name="e_q3" value="5"> Travailler ou créer une activité tout de suite</label><label class="radio-option"><input type="radio" name="e_q3" value="6"> Je ne sais pas encore</label></div></div>
+                <div class="question-card"><div class="question-title">Q4. Quels domaines d&#x27;études envisagez-vous ? (plusieurs choix possibles)</div><div class="check-grid"><label class="radio-option"><input type="checkbox" name="e_q4" value="Santé et médecine"> Santé et médecine</label><label class="radio-option"><input type="checkbox" name="e_q4" value="Ingénierie et sciences de l&#x27;ingénieur"> Ingénierie et sciences de l&#x27;ingénieur</label><label class="radio-option"><input type="checkbox" name="e_q4" value="Informatique, intelligence artificielle et data"> Informatique, intelligence artificielle et data</label><label class="radio-option"><input type="checkbox" name="e_q4" value="Gestion, commerce, finance et comptabilité"> Gestion, commerce, finance et comptabilité</label><label class="radio-option"><input type="checkbox" name="e_q4" value="Droit, sciences politiques et relations internationales"> Droit, sciences politiques et relations internationales</label><label class="radio-option"><input type="checkbox" name="e_q4" value="Lettres, langues, communication et journalisme"> Lettres, langues, communication et journalisme</label><label class="radio-option"><input type="checkbox" name="e_q4" value="Sciences fondamentales, agronomie et environnement"> Sciences fondamentales, agronomie et environnement</label><label class="radio-option"><input type="checkbox" name="e_q4" value="Arts, design, culture et médias"> Arts, design, culture et médias</label><label class="radio-option"><input type="checkbox" name="e_q4" value="Éducation, sciences humaines et sociales"> Éducation, sciences humaines et sociales</label><label class="radio-option"><input type="checkbox" name="e_q4" value="Entrepreneuriat et création d&#x27;entreprise"> Entrepreneuriat et création d&#x27;entreprise</label><label class="radio-option"><input type="checkbox" name="e_q4" value="autre"> Autre :<input type="text" class="inline-text" name="e_q4_autre" aria-label="Autre"></label></div></div>
+                <div class="question-card"><div class="question-title">Q5. Dans quels pays ou régions souhaiteriez-vous étudier ? (plusieurs choix possibles)</div><div class="check-grid"><label class="radio-option"><input type="checkbox" name="e_q5" value="Cameroun"> Cameroun</label><label class="radio-option"><input type="checkbox" name="e_q5" value="Autre pays africain"> Autre pays africain</label><label class="radio-option"><input type="checkbox" name="e_q5" value="France"> France</label><label class="radio-option"><input type="checkbox" name="e_q5" value="Canada"> Canada</label><label class="radio-option"><input type="checkbox" name="e_q5" value="Belgique, Suisse ou autre pays d&#x27;Europe"> Belgique, Suisse ou autre pays d&#x27;Europe</label><label class="radio-option"><input type="checkbox" name="e_q5" value="Royaume-Uni ou États-Unis"> Royaume-Uni ou États-Unis</label><label class="radio-option"><input type="checkbox" name="e_q5" value="Asie ou Moyen-Orient"> Asie ou Moyen-Orient</label><label class="radio-option"><input type="checkbox" name="e_q5" value="Pas encore décidé"> Pas encore décidé</label><label class="radio-option"><input type="checkbox" name="e_q5" value="autre"> Autre :<input type="text" class="inline-text" name="e_q5_autre" aria-label="Autre"></label></div></div>
+                <div class="question-card"><div class="question-title">Q6. Comment évaluez-vous votre connaissance de…</div><div class="scale-block"><div class="scale-wrap"><table class="scale-table"><thead><tr><th scope="col">Critère</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">5</th></tr></thead><tbody><tr><td>Les conditions d&#x27;admission dans les filières visées</td><td><input type="radio" name="e_q6_1" value="1" aria-label="Les conditions d&#x27;admission dans les filières visées : 1"></td><td><input type="radio" name="e_q6_1" value="2" aria-label="Les conditions d&#x27;admission dans les filières visées : 2"></td><td><input type="radio" name="e_q6_1" value="3" aria-label="Les conditions d&#x27;admission dans les filières visées : 3"></td><td><input type="radio" name="e_q6_1" value="4" aria-label="Les conditions d&#x27;admission dans les filières visées : 4"></td><td><input type="radio" name="e_q6_1" value="5" aria-label="Les conditions d&#x27;admission dans les filières visées : 5"></td></tr><tr><td>Le calendrier des candidatures</td><td><input type="radio" name="e_q6_2" value="1" aria-label="Le calendrier des candidatures : 1"></td><td><input type="radio" name="e_q6_2" value="2" aria-label="Le calendrier des candidatures : 2"></td><td><input type="radio" name="e_q6_2" value="3" aria-label="Le calendrier des candidatures : 3"></td><td><input type="radio" name="e_q6_2" value="4" aria-label="Le calendrier des candidatures : 4"></td><td><input type="radio" name="e_q6_2" value="5" aria-label="Le calendrier des candidatures : 5"></td></tr><tr><td>Les tests de langue exigés (DELF, TCF, IELTS, TOEFL…)</td><td><input type="radio" name="e_q6_3" value="1" aria-label="Les tests de langue exigés (DELF, TCF, IELTS, TOEFL…) : 1"></td><td><input type="radio" name="e_q6_3" value="2" aria-label="Les tests de langue exigés (DELF, TCF, IELTS, TOEFL…) : 2"></td><td><input type="radio" name="e_q6_3" value="3" aria-label="Les tests de langue exigés (DELF, TCF, IELTS, TOEFL…) : 3"></td><td><input type="radio" name="e_q6_3" value="4" aria-label="Les tests de langue exigés (DELF, TCF, IELTS, TOEFL…) : 4"></td><td><input type="radio" name="e_q6_3" value="5" aria-label="Les tests de langue exigés (DELF, TCF, IELTS, TOEFL…) : 5"></td></tr><tr><td>Les démarches de visa et de logement</td><td><input type="radio" name="e_q6_4" value="1" aria-label="Les démarches de visa et de logement : 1"></td><td><input type="radio" name="e_q6_4" value="2" aria-label="Les démarches de visa et de logement : 2"></td><td><input type="radio" name="e_q6_4" value="3" aria-label="Les démarches de visa et de logement : 3"></td><td><input type="radio" name="e_q6_4" value="4" aria-label="Les démarches de visa et de logement : 4"></td><td><input type="radio" name="e_q6_4" value="5" aria-label="Les démarches de visa et de logement : 5"></td></tr><tr><td>Les bourses disponibles</td><td><input type="radio" name="e_q6_5" value="1" aria-label="Les bourses disponibles : 1"></td><td><input type="radio" name="e_q6_5" value="2" aria-label="Les bourses disponibles : 2"></td><td><input type="radio" name="e_q6_5" value="3" aria-label="Les bourses disponibles : 3"></td><td><input type="radio" name="e_q6_5" value="4" aria-label="Les bourses disponibles : 4"></td><td><input type="radio" name="e_q6_5" value="5" aria-label="Les bourses disponibles : 5"></td></tr></tbody></table></div><div class="scale-legend">1 = je ne sais rien · 3 = j&#x27;ai des notions · 5 = je maîtrise le sujet.</div></div></div>
+                <div class="question-card"><div class="question-title">Q7. Comment envisagez-vous de financer vos études après le bac ? (plusieurs choix possibles)</div><div class="check-grid"><label class="radio-option"><input type="checkbox" name="e_q7" value="Ressources de ma famille"> Ressources de ma famille</label><label class="radio-option"><input type="checkbox" name="e_q7" value="Bourse d&#x27;études (mérite, gouvernement, fondation, université)"> Bourse d&#x27;études (mérite, gouvernement, fondation, université)</label><label class="radio-option"><input type="checkbox" name="e_q7" value="Prêt ou crédit étudiant"> Prêt ou crédit étudiant</label><label class="radio-option"><input type="checkbox" name="e_q7" value="Petit emploi ou stage rémunéré pendant mes études"> Petit emploi ou stage rémunéré pendant mes études</label><label class="radio-option"><input type="checkbox" name="e_q7" value="Aide de proches à l&#x27;étranger (diaspora)"> Aide de proches à l&#x27;étranger (diaspora)</label><label class="radio-option"><input type="checkbox" name="e_q7" value="Épargne déjà constituée"> Épargne déjà constituée</label><label class="radio-option"><input type="checkbox" name="e_q7" value="Je ne sais pas encore comment financer mes études"> Je ne sais pas encore comment financer mes études</label><label class="radio-option"><input type="checkbox" name="e_q7" value="autre"> Autre :<input type="text" class="inline-text" name="e_q7_autre" aria-label="Autre"></label></div></div>
+                <div class="question-card"><div class="question-title">Q8. Quels sont, selon vous, les principaux obstacles à votre projet ? (plusieurs choix possibles)</div><div class="check-grid"><label class="radio-option"><input type="checkbox" name="e_q8" value="Le financement"> Le financement</label><label class="radio-option"><input type="checkbox" name="e_q8" value="Mon niveau académique actuel"> Mon niveau académique actuel</label><label class="radio-option"><input type="checkbox" name="e_q8" value="Le niveau de langue (français, anglais)"> Le niveau de langue (français, anglais)</label><label class="radio-option"><input type="checkbox" name="e_q8" value="Les démarches de visa et de logement"> Les démarches de visa et de logement</label><label class="radio-option"><input type="checkbox" name="e_q8" value="Le manque d&#x27;informations fiables"> Le manque d&#x27;informations fiables</label><label class="radio-option"><input type="checkbox" name="e_q8" value="L&#x27;éloignement de ma famille"> L&#x27;éloignement de ma famille</label><label class="radio-option"><input type="checkbox" name="e_q8" value="La pression de mon entourage"> La pression de mon entourage</label><label class="radio-option"><input type="checkbox" name="e_q8" value="L&#x27;incertitude sur le choix de la filière"> L&#x27;incertitude sur le choix de la filière</label><label class="radio-option"><input type="checkbox" name="e_q8" value="Le manque de confiance en moi"> Le manque de confiance en moi</label><label class="radio-option"><input type="checkbox" name="e_q8" value="autre"> Autre :<input type="text" class="inline-text" name="e_q8_autre" aria-label="Autre"></label></div></div>
+                <div class="question-card"><div class="question-title">Q9. Quel accompagnement attendez-vous de BISSIMA pour l&#x27;après-bac ? (plusieurs choix possibles)</div><div class="check-grid"><label class="radio-option"><input type="checkbox" name="e_q9" value="Choix de la filière et orientation"> Choix de la filière et orientation</label><label class="radio-option"><input type="checkbox" name="e_q9" value="Choix des universités et constitution des dossiers de candidature"> Choix des universités et constitution des dossiers de candidature</label><label class="radio-option"><input type="checkbox" name="e_q9" value="Préparation aux tests de langue (DELF, TCF, IELTS, TOEFL…)"> Préparation aux tests de langue (DELF, TCF, IELTS, TOEFL…)</label><label class="radio-option"><input type="checkbox" name="e_q9" value="Recherche de bourses"> Recherche de bourses</label><label class="radio-option"><input type="checkbox" name="e_q9" value="Plan de financement et d&#x27;épargne"> Plan de financement et d&#x27;épargne</label><label class="radio-option"><input type="checkbox" name="e_q9" value="Visa, logement et préparation à l&#x27;installation"> Visa, logement et préparation à l&#x27;installation</label><label class="radio-option"><input type="checkbox" name="e_q9" value="Rédaction du CV et des lettres de motivation"> Rédaction du CV et des lettres de motivation</label><label class="radio-option"><input type="checkbox" name="e_q9" value="Préparation aux entretiens"> Préparation aux entretiens</label><label class="radio-option"><input type="checkbox" name="e_q9" value="Mise en relation avec des anciens et des professionnels"> Mise en relation avec des anciens et des professionnels</label><label class="radio-option"><input type="checkbox" name="e_q9" value="Suivi après l&#x27;arrivée dans l&#x27;établissement"> Suivi après l&#x27;arrivée dans l&#x27;établissement</label><label class="radio-option"><input type="checkbox" name="e_q9" value="autre"> Autre :<input type="text" class="inline-text" name="e_q9_autre" aria-label="Autre"></label></div></div>
+                <div class="question-card"><div class="question-title">Q10. Où vous voyez-vous 10 ans après le baccalauréat ? Ajoutez toute contrainte, inquiétude ou question qui compte pour votre projet.</div><div class="text-block"><textarea name="e_q10" rows="4"></textarea></div></div>
+                <div class="consent-box"><label class="radio-option"><input type="checkbox" name="e_consent" required> J'ai répondu honnêtement et avec mes propres mots. J'accepte que mes réponses soient traitées de manière confidentielle par BISSIMA aux seules fins de mon accompagnement, conformément à la loi n° 2024/017 relative à la protection des données à caractère personnel.</label></div>
+
+                <button type="submit" class="submit-btn">Soumettre le Diagnostic Élève</button>
+            </form>
+        </section>
+
+        <!-- FORMULAIRE PARENT -->
+        <section id="parent-form" class="form-section">
+            <h2>Diagnostic 360° - Espace Parent</h2>
+            <div class="intro-box">
+                <strong>Chers Parents :</strong> Ce formulaire prépare l'entretien de restitution du diagnostic d'orientation de votre enfant. Il vous permet d'évaluer, de votre point de vue, l'accompagnement, la maturité et les besoins de votre enfant, ainsi que vos aspirations pour l'après-baccalauréat. Durée indicative : 5 à 10 minutes. Si une question ne s'applique pas, laissez-la vide.
+            </div>
+
+            <form onsubmit="handleSubmit(event, 'Parent')">
+                <h3>Vos informations et celles de votre enfant</h3>
+                <div class="form-group"><label for="p-nom">Vos Nom et Prénoms (Parent ou tuteur légal) :</label><input type="text" id="p-nom" name="p_nom" required></div>
+                <div class="form-group"><label for="p-enfant-nom">Nom et Prénoms de l&#x27;enfant :</label><input type="text" id="p-enfant-nom" name="p_enfant-nom" required></div>
+                <div class="form-group"><label for="p-email">Adresse Électronique :</label><input type="email" id="p-email" name="p_email" required></div>
+                <div class="form-group"><label for="p-tel">Téléphone ou WhatsApp :</label><input type="tel" id="p-tel" name="p_tel" required></div>
+                <h3>Évaluation du projet et de l&#x27;accompagnement</h3>
+                <div class="question-card"><div class="question-title">P1. Comment évaluez-vous la clarté du projet d&#x27;études ou professionnel de votre enfant ?</div><div class="radio-options"><label class="radio-option"><input type="radio" name="p_p1" value="1" required> Il/Elle navigue à vue, sans idée précise.</label><label class="radio-option"><input type="radio" name="p_p1" value="2"> Il/Elle a des envies vagues qui changent souvent.</label><label class="radio-option"><input type="radio" name="p_p1" value="3"> Un projet commence à se dessiner clairement.</label><label class="radio-option"><input type="radio" name="p_p1" value="4"> Le projet est bien défini et structuré.</label></div></div>
+                <div class="question-card"><div class="question-title">P2. Quel est le niveau d&#x27;autonomie de votre enfant dans ses démarches administratives et académiques ?</div><div class="radio-options"><label class="radio-option"><input type="radio" name="p_p2" value="1" required> Très faible, il/elle a besoin d&#x27;être totalement guidé(e).</label><label class="radio-option"><input type="radio" name="p_p2" value="2"> Moyen, il/elle commence mais abandonne vite face aux obstacles.</label><label class="radio-option"><input type="radio" name="p_p2" value="3"> Bon, il/elle fait des recherches et gère ses priorités.</label><label class="radio-option"><input type="radio" name="p_p2" value="4"> Excellent, grande autonomie et sens de l&#x27;organisation.</label></div></div>
+                <h3 class="axe-bac">Vos aspirations pour l&#x27;après-baccalauréat</h3>
+                <div class="question-card"><div class="question-title">P3. Que souhaitez-vous pour votre enfant juste après le baccalauréat ?</div><div class="radio-options"><label class="radio-option"><input type="radio" name="p_p3" value="1" required> Qu&#x27;il/elle poursuive des études supérieures dans son pays</label><label class="radio-option"><input type="radio" name="p_p3" value="2"> Qu&#x27;il/elle poursuive des études supérieures à l&#x27;étranger</label><label class="radio-option"><input type="radio" name="p_p3" value="3"> Qu&#x27;il/elle suive une formation professionnelle ou technique courte</label><label class="radio-option"><input type="radio" name="p_p3" value="4"> Qu&#x27;il/elle prépare un concours (grandes écoles, fonction publique, écoles de santé…)</label><label class="radio-option"><input type="radio" name="p_p3" value="5"> Qu&#x27;il/elle travaille ou crée une activité rapidement</label><label class="radio-option"><input type="radio" name="p_p3" value="6"> Nous ne savons pas encore</label></div></div>
+                <div class="question-card"><div class="question-title">P4. Quels métiers ou domaines imaginez-vous pour votre enfant ? Pourquoi ?</div><div class="text-block"><textarea name="p_p4" rows="3"></textarea></div></div>
+                <div class="question-card"><div class="question-title">P5. Dans quels pays ou régions verriez-vous ses études supérieures ? (plusieurs choix possibles)</div><div class="check-grid"><label class="radio-option"><input type="checkbox" name="p_p5" value="Cameroun"> Cameroun</label><label class="radio-option"><input type="checkbox" name="p_p5" value="Autre pays africain"> Autre pays africain</label><label class="radio-option"><input type="checkbox" name="p_p5" value="France"> France</label><label class="radio-option"><input type="checkbox" name="p_p5" value="Canada"> Canada</label><label class="radio-option"><input type="checkbox" name="p_p5" value="Belgique, Suisse ou autre pays d&#x27;Europe"> Belgique, Suisse ou autre pays d&#x27;Europe</label><label class="radio-option"><input type="checkbox" name="p_p5" value="Royaume-Uni ou États-Unis"> Royaume-Uni ou États-Unis</label><label class="radio-option"><input type="checkbox" name="p_p5" value="Asie ou Moyen-Orient"> Asie ou Moyen-Orient</label><label class="radio-option"><input type="checkbox" name="p_p5" value="Pas encore décidé"> Pas encore décidé</label><label class="radio-option"><input type="checkbox" name="p_p5" value="autre"> Autre :<input type="text" class="inline-text" name="p_p5_autre" aria-label="Autre"></label></div></div>
+                <div class="question-card"><div class="question-title">P6. Qu&#x27;est-ce qui compte le plus pour vous dans son parcours après le bac ?</div><div class="scale-block"><div class="scale-wrap"><table class="scale-table"><thead><tr><th scope="col">Critère</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">5</th></tr></thead><tbody><tr><td>L&#x27;excellence académique et le prestige de l&#x27;université</td><td><input type="radio" name="p_p6_1" value="1" aria-label="L&#x27;excellence académique et le prestige de l&#x27;université : 1"></td><td><input type="radio" name="p_p6_1" value="2" aria-label="L&#x27;excellence académique et le prestige de l&#x27;université : 2"></td><td><input type="radio" name="p_p6_1" value="3" aria-label="L&#x27;excellence académique et le prestige de l&#x27;université : 3"></td><td><input type="radio" name="p_p6_1" value="4" aria-label="L&#x27;excellence académique et le prestige de l&#x27;université : 4"></td><td><input type="radio" name="p_p6_1" value="5" aria-label="L&#x27;excellence académique et le prestige de l&#x27;université : 5"></td></tr><tr><td>L&#x27;obtention d&#x27;une bourse / la maîtrise du coût</td><td><input type="radio" name="p_p6_2" value="1" aria-label="L&#x27;obtention d&#x27;une bourse / la maîtrise du coût : 1"></td><td><input type="radio" name="p_p6_2" value="2" aria-label="L&#x27;obtention d&#x27;une bourse / la maîtrise du coût : 2"></td><td><input type="radio" name="p_p6_2" value="3" aria-label="L&#x27;obtention d&#x27;une bourse / la maîtrise du coût : 3"></td><td><input type="radio" name="p_p6_2" value="4" aria-label="L&#x27;obtention d&#x27;une bourse / la maîtrise du coût : 4"></td><td><input type="radio" name="p_p6_2" value="5" aria-label="L&#x27;obtention d&#x27;une bourse / la maîtrise du coût : 5"></td></tr><tr><td>L&#x27;épanouissement personnel de l&#x27;enfant</td><td><input type="radio" name="p_p6_3" value="1" aria-label="L&#x27;épanouissement personnel de l&#x27;enfant : 1"></td><td><input type="radio" name="p_p6_3" value="2" aria-label="L&#x27;épanouissement personnel de l&#x27;enfant : 2"></td><td><input type="radio" name="p_p6_3" value="3" aria-label="L&#x27;épanouissement personnel de l&#x27;enfant : 3"></td><td><input type="radio" name="p_p6_3" value="4" aria-label="L&#x27;épanouissement personnel de l&#x27;enfant : 4"></td><td><input type="radio" name="p_p6_3" value="5" aria-label="L&#x27;épanouissement personnel de l&#x27;enfant : 5"></td></tr><tr><td>Le retour de compétences au service de l&#x27;Afrique</td><td><input type="radio" name="p_p6_4" value="1" aria-label="Le retour de compétences au service de l&#x27;Afrique : 1"></td><td><input type="radio" name="p_p6_4" value="2" aria-label="Le retour de compétences au service de l&#x27;Afrique : 2"></td><td><input type="radio" name="p_p6_4" value="3" aria-label="Le retour de compétences au service de l&#x27;Afrique : 3"></td><td><input type="radio" name="p_p6_4" value="4" aria-label="Le retour de compétences au service de l&#x27;Afrique : 4"></td><td><input type="radio" name="p_p6_4" value="5" aria-label="Le retour de compétences au service de l&#x27;Afrique : 5"></td></tr><tr><td>L&#x27;employabilité et l&#x27;insertion professionnelle rapide</td><td><input type="radio" name="p_p6_5" value="1" aria-label="L&#x27;employabilité et l&#x27;insertion professionnelle rapide : 1"></td><td><input type="radio" name="p_p6_5" value="2" aria-label="L&#x27;employabilité et l&#x27;insertion professionnelle rapide : 2"></td><td><input type="radio" name="p_p6_5" value="3" aria-label="L&#x27;employabilité et l&#x27;insertion professionnelle rapide : 3"></td><td><input type="radio" name="p_p6_5" value="4" aria-label="L&#x27;employabilité et l&#x27;insertion professionnelle rapide : 4"></td><td><input type="radio" name="p_p6_5" value="5" aria-label="L&#x27;employabilité et l&#x27;insertion professionnelle rapide : 5"></td></tr><tr><td>La sécurité et le bien-être de l&#x27;enfant à l&#x27;étranger</td><td><input type="radio" name="p_p6_6" value="1" aria-label="La sécurité et le bien-être de l&#x27;enfant à l&#x27;étranger : 1"></td><td><input type="radio" name="p_p6_6" value="2" aria-label="La sécurité et le bien-être de l&#x27;enfant à l&#x27;étranger : 2"></td><td><input type="radio" name="p_p6_6" value="3" aria-label="La sécurité et le bien-être de l&#x27;enfant à l&#x27;étranger : 3"></td><td><input type="radio" name="p_p6_6" value="4" aria-label="La sécurité et le bien-être de l&#x27;enfant à l&#x27;étranger : 4"></td><td><input type="radio" name="p_p6_6" value="5" aria-label="La sécurité et le bien-être de l&#x27;enfant à l&#x27;étranger : 5"></td></tr></tbody></table></div><div class="scale-legend">1 = peu important · 5 = essentiel. Notez chaque ligne indépendamment.</div></div></div>
+                <div class="question-card"><div class="question-title">P7. Quelles sont vos principales préoccupations pour l&#x27;après-bac ? (plusieurs choix possibles)</div><div class="check-grid"><label class="radio-option"><input type="checkbox" name="p_p7" value="Le coût des études"> Le coût des études</label><label class="radio-option"><input type="checkbox" name="p_p7" value="La sécurité et le bien-être à l&#x27;étranger"> La sécurité et le bien-être à l&#x27;étranger</label><label class="radio-option"><input type="checkbox" name="p_p7" value="Le niveau académique de mon enfant"> Le niveau académique de mon enfant</label><label class="radio-option"><input type="checkbox" name="p_p7" value="Les démarches de visa et de logement"> Les démarches de visa et de logement</label><label class="radio-option"><input type="checkbox" name="p_p7" value="Le choix de la bonne filière"> Le choix de la bonne filière</label><label class="radio-option"><input type="checkbox" name="p_p7" value="Les débouchés et l&#x27;emploi après les études"> Les débouchés et l&#x27;emploi après les études</label><label class="radio-option"><input type="checkbox" name="p_p7" value="L&#x27;éloignement de la famille"> L&#x27;éloignement de la famille</label><label class="radio-option"><input type="checkbox" name="p_p7" value="La reconnaissance des diplômes"> La reconnaissance des diplômes</label><label class="radio-option"><input type="checkbox" name="p_p7" value="Le risque de mauvaise orientation ou d&#x27;échec"> Le risque de mauvaise orientation ou d&#x27;échec</label><label class="radio-option"><input type="checkbox" name="p_p7" value="Les fausses promesses et les intermédiaires peu fiables"> Les fausses promesses et les intermédiaires peu fiables</label><label class="radio-option"><input type="checkbox" name="p_p7" value="autre"> Autre :<input type="text" class="inline-text" name="p_p7_autre" aria-label="Autre"></label></div></div>
+                <div class="question-card"><div class="question-title">P8. Budget annuel que la famille pourrait consacrer à l&#x27;accompagnement et aux études :</div><div class="radio-options"><label class="radio-option"><input type="radio" name="p_p8" value="1"> Moins de 500 000 FCFA</label><label class="radio-option"><input type="radio" name="p_p8" value="2"> 500 000 – 1 500 000 FCFA</label><label class="radio-option"><input type="radio" name="p_p8" value="3"> 1 500 000 – 5 000 000 FCFA</label><label class="radio-option"><input type="radio" name="p_p8" value="4"> Plus de 5 000 000 FCFA</label><label class="radio-option"><input type="radio" name="p_p8" value="5"> Je ne souhaite pas répondre</label></div></div>
+                <div class="question-card"><div class="question-title">P9. Quel accompagnement attendez-vous de BISSIMA pour l&#x27;après-bac de votre enfant ? (plusieurs choix possibles)</div><div class="check-grid"><label class="radio-option"><input type="checkbox" name="p_p9" value="Choix de la filière et orientation"> Choix de la filière et orientation</label><label class="radio-option"><input type="checkbox" name="p_p9" value="Choix des universités et constitution des dossiers de candidature"> Choix des universités et constitution des dossiers de candidature</label><label class="radio-option"><input type="checkbox" name="p_p9" value="Préparation aux tests de langue (DELF, TCF, IELTS, TOEFL…)"> Préparation aux tests de langue (DELF, TCF, IELTS, TOEFL…)</label><label class="radio-option"><input type="checkbox" name="p_p9" value="Recherche de bourses"> Recherche de bourses</label><label class="radio-option"><input type="checkbox" name="p_p9" value="Plan de financement et d&#x27;épargne"> Plan de financement et d&#x27;épargne</label><label class="radio-option"><input type="checkbox" name="p_p9" value="Visa, logement et préparation à l&#x27;installation"> Visa, logement et préparation à l&#x27;installation</label><label class="radio-option"><input type="checkbox" name="p_p9" value="Rédaction du CV et des lettres de motivation"> Rédaction du CV et des lettres de motivation</label><label class="radio-option"><input type="checkbox" name="p_p9" value="Préparation aux entretiens"> Préparation aux entretiens</label><label class="radio-option"><input type="checkbox" name="p_p9" value="Mise en relation avec des anciens et des professionnels"> Mise en relation avec des anciens et des professionnels</label><label class="radio-option"><input type="checkbox" name="p_p9" value="Suivi après l&#x27;arrivée dans l&#x27;établissement"> Suivi après l&#x27;arrivée dans l&#x27;établissement</label><label class="radio-option"><input type="checkbox" name="p_p9" value="autre"> Autre :<input type="text" class="inline-text" name="p_p9_autre" aria-label="Autre"></label></div></div>
+                <div class="form-group"><label for="p-fin">Quelles sont vos principales attentes ou inquiétudes concernant l'avenir de votre enfant ?</label><textarea id="p-fin" name="p_fin" rows="4" placeholder="Partagez vos attentes (financement, choix des écoles, intégration)..."></textarea></div>
+                <div class="consent-box"><label class="radio-option"><input type="checkbox" name="p_consent" required> Nous certifions l'exactitude des informations fournies et consentons à leur traitement confidentiel par BISSIMA aux seules fins de l'accompagnement de notre enfant, conformément à la loi n° 2024/017. Nous comprenons que le programme BISSIMA HORIZON engage une obligation de moyens, et non une garantie de résultat.</label></div>
+
+                <button type="submit" class="submit-btn">Soumettre le Diagnostic Parent</button>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Bissima / Lignan Consulting. Tous droits réservés.</p>
+        <p>Contact : engom@letudiantafricain.com · +237 695 090 029</p>
+    </footer>
+
+    <script>
+        // Fonction pour basculer entre l'onglet Élève et Parent
+        function switchForm(type) {
+            const eleveBtn = document.querySelectorAll('.tab-btn')[0];
+            const parentBtn = document.querySelectorAll('.tab-btn')[1];
+            const eleveForm = document.getElementById('eleve-form');
+            const parentForm = document.getElementById('parent-form');
+
+            if (type === 'eleve') {
+                eleveBtn.classList.add('active');
+                parentBtn.classList.remove('active');
+                eleveForm.classList.add('active');
+                parentForm.classList.remove('active');
+            } else {
+                parentBtn.classList.add('active');
+                eleveBtn.classList.remove('active');
+                parentForm.classList.add('active');
+                eleveForm.classList.remove('active');
+            }
+        }
+
+        // Regroupe les réponses d'un formulaire dans un objet (cases à cocher = tableau)
+        function collectAnswers(form) {
+            const data = {};
+            new FormData(form).forEach((value, key) => {
+                if (value === '') return;
+                data[key] = key in data ? [].concat(data[key], value) : value;
+            });
+            return data;
+        }
+
+        // Simulation de soumission (en attendant la base de données)
+        function handleSubmit(event, profileType) {
+            event.preventDefault();
+            const answers = collectAnswers(event.target);
+            console.log('Diagnostic 360° - ' + profileType, JSON.stringify(answers, null, 2));
+            alert(`Merci ! Le formulaire ${profileType} a bien été simulé avec succès.\n\nProchaine étape : nous connecterons ces données à votre future base de données.`);
+        }
+    </script>
+</body>
+</html>
